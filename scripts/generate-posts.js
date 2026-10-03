@@ -582,6 +582,20 @@ const SHARE_JS = `
                 }
             }
 
+            /* 系统分享面板（Web Share API）：与原生 App 同款体验 —— 直选微信/QQ 等并进入分享。
+               必须在用户手势中同步调用；不支持、或失败（非用户取消）时回退到复制 + 拉起微信。 */
+            function webShare() {
+                if (typeof navigator.share !== 'function') return false;
+                try {
+                    navigator.share({ title: title, text: desc, url: pageUrl }).catch(function(err) {
+                        if (!err || err.name !== 'AbortError') wechatMobile(); // 用户主动取消则不打扰
+                    });
+                    return true;
+                } catch (e) {
+                    return false; // 同步抛错（非安全上下文等）→ 交给调用方兜底
+                }
+            }
+
             /* 微信内置浏览器：官方唯一支持的分享方式是右上角「⋯」菜单，展示引导层 */
             var wxGuide = document.getElementById('wxGuide');
             function showWxGuide() { wxGuide.classList.add('show'); }
@@ -620,9 +634,9 @@ const SHARE_JS = `
                     e.stopPropagation();
                     var k = item.getAttribute('data-share');
                     if (k === 'wechat') {
-                        if (inWeChat) { showWxGuide(); }        // 微信内：引导用右上角菜单转发（卡片自动备好）
-                        else if (isMobile) { wechatMobile(); }  // 手机外部浏览器：复制+拉起微信
-                        else { openQr(); }                      // 电脑：展示二维码
+                        if (inWeChat) { showWxGuide(); }                          // 微信内：引导用右上角菜单转发（卡片自动备好）
+                        else if (isMobile) { if (!webShare()) wechatMobile(); }   // 手机：优先系统分享面板，兜底复制+拉起微信
+                        else { openQr(); }                                        // 电脑：展示二维码
                         closeFab(); return;
                     }
                     if (k === 'copy') { copyLink(item); return; }
