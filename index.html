@@ -782,6 +782,10 @@
             .footer-links a .label {
                 display: none;
             }
+            /* 赞助入口例外：窄屏也保留「为我发电」文字（优先级更高，覆盖上面的隐藏规则） */
+            .footer-links a.donate .label {
+                display: inline;
+            }
             .cookie-banner .cookie-actions {
                 flex-wrap: wrap;
             }
@@ -878,6 +882,13 @@
                         <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
                     </svg>
                     <span class="label">邮箱</span>
+                </a>
+                <!-- 赞助入口：爱发电（.donate 让文字在窄屏也保留，见样式区 media query） -->
+                <a class="donate" href="https://ifdian.net/a/hzk-team/plan" target="_blank" rel="noopener" title="为我发电 · 爱发电">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/>
+                    </svg>
+                    <span class="label">为我发电</span>
                 </a>
             </div>
         </div>
