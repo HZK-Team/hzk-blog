@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>联系我 · HZK 博客</title>
+    <meta name="description" content="给 HZK 博客留言：合作、建议或只是打个招呼。" />
+    <link rel="canonical" href="https://hzk-blog.netlify.app/contact" />
+    <meta property="og:title" content="联系我 · HZK 博客" />
+    <meta property="og:description" content="给 HZK 博客留言：合作、建议或只是打个招呼。" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://hzk-blog.netlify.app/contact" />
+    <meta property="og:image" content="https://hzk-blog.netlify.app/Logo.png" />
+    <style>
+        :root {
+            --bg: #fafafa; --bg-card: #ffffff; --bg-hover: #f3f4f6;
+            --text-primary: #1a1a1a; --text-secondary: #6b7280; --text-muted: #9ca3af;
+            --border: #e5e7eb; --bg-code: #f3f4f6;
+            --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            --radius: 12px; --radius-sm: 6px;
+            --font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+        [data-theme="dark"] {
+            --bg: #0a0a0a; --bg-card: #141414; --bg-hover: #1f1f1f;
+            --text-primary: #e5e5e5; --text-secondary: #a3a3a3; --text-muted: #6b6b6b;
+            --border: #262626; --bg-code: #1a1a1a;
+        }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: var(--font); background: var(--bg); color: var(--text-primary);
+            line-height: 1.8; -webkit-font-smoothing: antialiased;
+            transition: background var(--transition), color var(--transition);
+            min-height: 100vh; display: flex; flex-direction: column;
+        }
+        a { color: inherit; text-decoration: none; }
+        .container { max-width: 680px; margin: 0 auto; padding: 0 24px; width: 100%; }
+        .nav { padding: 28px 0 12px; display: flex; align-items: center; justify-content: space-between; }
+        .back-link {
+            display: inline-flex; align-items: center; gap: 6px; font-size: 14px;
+            color: var(--text-muted); transition: color var(--transition), transform var(--transition);
+        }
+        .back-link:hover { color: var(--text-primary); transform: translateX(-3px); }
+        .back-link svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+        .icon-btn {
+            background: transparent; border: none; width: 36px; height: 36px; border-radius: 50%;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            color: var(--text-secondary); padding: 0;
+            transition: background var(--transition), color var(--transition), transform var(--transition);
+        }
+        .icon-btn:hover { background: var(--bg-hover); color: var(--text-primary); transform: scale(1.08); }
+        .icon-btn svg { width: 19px; height: 19px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+        main { flex: 1; padding: 24px 0 80px; }
+        /* ===== 分层入场 ===== */
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+        h1 { font-size: 32px; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 10px; animation: fadeUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.05s backwards; }
+        .page-desc { font-size: 16px; color: var(--text-secondary); margin-bottom: 36px; animation: fadeUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.14s backwards; }
+        .field { margin-bottom: 22px; animation: fadeUp 0.55s cubic-bezier(0.22, 1, 0.36, 1) backwards; }
+        .field:nth-of-type(1) { animation-delay: 0.24s; }
+        .field:nth-of-type(2) { animation-delay: 0.32s; }
+        .field:nth-of-type(3) { animation-delay: 0.4s; }
+        .submit-btn { animation: fadeUp 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.5s backwards; }
+        .submit-btn svg { transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        .submit-btn:hover svg { transform: translateX(4px) translateY(-2px) rotate(6deg); }
+        .nav { animation: fadeUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) backwards; }
+        @media (prefers-reduced-motion: reduce) {
+            h1, .page-desc, .field, .submit-btn, .nav { animation: none; }
+        }
+        /* ===== 表单 ===== */
+        .field label { display: block; font-size: 14px; font-weight: 600; color: var(--text-primary); margin-bottom: 8px; }
+        .field input, .field textarea {
+            width: 100%; padding: 12px 16px; font-size: 15px; font-family: var(--font);
+            border: 1px solid var(--border); border-radius: var(--radius-sm);
+            background: var(--bg-card); color: var(--text-primary); outline: none;
+            transition: border-color var(--transition), box-shadow 0.35s ease, background var(--transition), transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .field textarea { min-height: 140px; resize: vertical; }
+        .field input:focus, .field textarea:focus {
+            border-color: var(--text-primary);
+            transform: translateY(-1px);
+            box-shadow: 0 0 0 4px rgba(26, 26, 26, 0.05), 0 6px 20px rgba(0, 0, 0, 0.05);
+        }
+        [data-theme="dark"] .field input:focus, [data-theme="dark"] .field textarea:focus {
+            box-shadow: 0 0 0 4px rgba(229, 229, 229, 0.08), 0 6px 20px rgba(0, 0, 0, 0.4);
+        }
+        .field label { transition: color var(--transition); }
+        .field:focus-within label { color: var(--text-primary); }
+        .submit-btn {
+            display: inline-flex; align-items: center; gap: 8px; padding: 12px 36px;
+            border: none; border-radius: 99px; background: var(--text-primary); color: var(--bg-card);
+            font-size: 15px; font-weight: 600; font-family: var(--font); cursor: pointer;
+            transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), opacity var(--transition);
+        }
+        .submit-btn:hover { transform: translateY(-2px); opacity: 0.88; }
+        .submit-btn:active { transform: scale(0.95); }
+        .submit-btn svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+        .hidden-field { position: absolute; left: -9999px; opacity: 0; } /* honeypot，人类看不到 */
+
+        /* ===== 跨页面过渡（参考 14-news 报纸站的移页效果）=====
+           ⚠️ 跨文档过渡会合并新旧文档样式且新文档优先，所有页面必须持有完全相同的
+           规则集（fwd/back 两个方向下 old/new 四种角色），否则旧页面的移出动画
+           会被新文档的同名规则覆盖 —— 表现就是「旧页没动、新页直接盖上来」。 */
+        @view-transition { navigation: auto; }
+        html { overflow-x: clip; }
+
+        /* 关闭 UA 默认的淡入淡出；滑动动画由下方 types 规则提供 */
+        ::view-transition-old(root),
+        ::view-transition-new(root) { animation: none; }
+
+        @keyframes vtOutLeft  { to   { transform: translateX(-100vw); } }
+        @keyframes vtInLeft   { from { transform: translateX(-100vw); } }
+        @keyframes vtOutRight { to   { transform: translateX(100vw); } }
+        @keyframes vtInRight  { from { transform: translateX(100vw); } }
+
+        /* 前进（首页 → 子页面）：首页左移出 + 子页面从右滑入 */
+        :active-view-transition-type(fwd)::view-transition-old(root) {
+            animation: vtOutLeft 0.42s cubic-bezier(0.4, 0, 0.2, 1) both;
+        }
+        :active-view-transition-type(fwd)::view-transition-new(root) {
+            animation: vtInRight 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+        /* 返回（子页面 → 首页）：子页面右移出 + 首页从左滑入 */
+        :active-view-transition-type(back)::view-transition-old(root) {
+            animation: vtOutRight 0.42s cubic-bezier(0.4, 0, 0.2, 1) both;
+        }
+        :active-view-transition-type(back)::view-transition-new(root) {
+            animation: vtInLeft 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+
+        /* 兜底路径（浏览器不支持跨文档过渡）：到达页整页滑入。
+           不设 fill-mode，动画结束自动恢复，避免影响 fixed 元素定位。 */
+        @keyframes pageInRight { from { opacity: 0.4; transform: translateX(100vw); } }
+        @keyframes pageInLeft  { from { opacity: 0.4; transform: translateX(-100vw); } }
+        html.nav-fwd body  { animation: pageInRight 0.42s cubic-bezier(0.22, 1, 0.36, 1); }
+        html.nav-back body { animation: pageInLeft  0.42s cubic-bezier(0.22, 1, 0.36, 1); }
+
+        /* 过渡到达时抑制元素级入场动画：滑动本身已是入场动效，叠加会显得乱 */
+        html.vt .nav,
+        html.vt .header .logo,
+        html.vt .logo-img,
+        html.vt .header-actions,
+        html.vt .search-section,
+        html.vt .stats,
+        html.vt .post-item,
+        html.vt .post-tags .tag-chip,
+        html.vt .code,
+        html.vt .title,
+        html.vt .desc,
+        html.vt .search-box,
+        html.vt .back-btn,
+        html.vt .field,
+        html.vt .submit-btn,
+        html.vt .card,
+        html.vt h1,
+        html.vt p,
+        html.vt .page-desc { animation: none; }
+
+        /* 首屏内容直接可见，不参与二次动画 */
+        html.vt .reveal,
+        html.vt .rv.pre-in { opacity: 1; animation: none; }
+
+        @media (prefers-reduced-motion: reduce) {
+            html.nav-fwd body,
+            html.nav-back body { animation: none; }
+            :active-view-transition-type(fwd)::view-transition-old(root),
+            :active-view-transition-type(fwd)::view-transition-new(root),
+            :active-view-transition-type(back)::view-transition-old(root),
+            :active-view-transition-type(back)::view-transition-new(root) { animation: none !important; }
+        }
+
+        @media (max-width: 600px) { h1 { font-size: 26px; } .container { padding: 0 16px; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="nav">
+            <a class="back-link" href="/">
+                <svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                返回首页
+            </a>
+            <button class="icon-btn" id="themeToggle" title="切换主题">
+                <svg id="themeIcon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </button>
+        </nav>
+        <main>
+            <h1>联系我</h1>
+            <p class="page-desc">合作、建议，或者只是打个招呼 —— 都欢迎。</p>
+            <!-- 提交链路（访客填完点发送 → 我的钉钉立刻收到）：
+                 表单 POST → Netlify Forms 存档 → 表单通知 Outgoing webhook
+                 → /api/contact-notify（云函数）→ 钉钉群机器人
+                 邮箱为必填：钉钉卡片里的「直接回信」靠它，否则无法回复访客。
+                 邮件通知可另配一条作为第二通道，与钉钉互不影响。 -->
+            <form name="contact" method="POST" action="/thanks" data-netlify="true" netlify-honeypot="bot-field">
+                <input type="hidden" name="form-name" value="contact" />
+                <!-- 供邮件通知（备用通道）使用的自定义标题；钉钉推送由函数自己组装标题 -->
+                <input type="hidden" name="subject" data-remove-prefix value="HZK 博客新留言" />
+                <p class="hidden-field">
+                    <label>不要填写这一栏：<input name="bot-field" /></label>
+                </p>
+                <div class="field">
+                    <label for="name">怎么称呼你</label>
+                    <input type="text" id="name" name="name" placeholder="你的名字或昵称" required maxlength="50" />
+                </div>
+                <div class="field">
+                    <label for="email">你的邮箱</label>
+                    <input type="email" id="email" name="email" placeholder="方便我回复你，不会公开" required maxlength="100" />
+                </div>
+                <div class="field">
+                    <label for="message">想说的话</label>
+                    <textarea id="message" name="message" placeholder="写下你的留言……" required maxlength="2000"></textarea>
+                </div>
+                <button class="submit-btn" type="submit">
+                    发送留言
+                    <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                </button>
+            </form>
+        </main>
+    </div>
+    <script>
+        (function() {
+            var THEME_KEY = "hzk-theme";
+            var saved = "light";
+            try { saved = localStorage.getItem(THEME_KEY) || "light"; } catch (e) {}
+            document.documentElement.setAttribute("data-theme", saved);
+            var icon = document.getElementById("themeIcon");
+            function setIcon(t) {
+                icon.innerHTML = t === "dark"
+                    ? '<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>'
+                    : '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+            }
+            setIcon(saved);
+            document.getElementById("themeToggle").addEventListener("click", function() {
+                var cur = document.documentElement.getAttribute("data-theme");
+                var next = cur === "dark" ? "light" : "dark";
+                document.documentElement.setAttribute("data-theme", next);
+                try { localStorage.setItem(THEME_KEY, next); } catch (e) {}
+                setIcon(next);
+            });
+
+            /* ===== 页面过渡：方向类型标记 + 到达处理 + 旧浏览器兜底 ===== */
+            (function() {
+                var REDUCED = false;
+                try { REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+
+                function isHomeUrl(u) {
+                    try {
+                        var p = new URL(u, location.href).pathname;
+                        return p === '/' || p === '/index.html';
+                    } catch (e) { return false; }
+                }
+                /* 目标不是首页 → 前进 fwd；目标是首页 → 返回 back */
+                function typeFor(u) { return isHomeUrl(u) ? 'back' : 'fwd'; }
+
+                /* 让首屏内容直接可见：滑动本身已是入场动效，不再播放二次动画 */
+                function markPreIn() {
+                    var vh = window.innerHeight || 800;
+                    var els = document.querySelectorAll('.rv, .reveal');
+                    for (var i = 0; i < els.length; i++) {
+                        if (els[i].getBoundingClientRect().top < vh * 0.98) els[i].classList.add('pre-in');
+                    }
+                }
+
+                var hasVT = ('onpagereveal' in window) || ('onpageswap' in window);
+
+                if (hasVT) {
+                    /* 离开页：标记方向，供两个文档的 CSS 匹配各自角色 */
+                    window.addEventListener('pageswap', function(e) {
+                        if (!e.viewTransition) return;
+                        var to = '';
+                        try { to = (e.activation && e.activation.entry) ? e.activation.entry.url : ''; } catch (err) {}
+                        try { e.viewTransition.types.add(typeFor(to || location.href)); } catch (err) {}
+                    });
+                    /* 到达页：打标记抑制元素级动画，并补一次方向类型（双保险） */
+                    window.addEventListener('pagereveal', function(e) {
+                        if (!e.viewTransition) return;
+                        document.documentElement.classList.add('vt');
+                        try { e.viewTransition.types.add(typeFor(location.href)); } catch (err) {}
+                        markPreIn();
+                    });
+                    return;
+                }
+
+                /* ===== 兜底：不支持跨文档 View Transitions ===== */
+                if (REDUCED) return;
+
+                /* 到达页：读取来源页留下的方向标记，播放整页滑入 */
+                var nav = null;
+                try { nav = sessionStorage.getItem('hzk-nav'); sessionStorage.removeItem('hzk-nav'); } catch (e) {}
+                if (nav === 'fwd' || nav === 'back') {
+                    document.documentElement.classList.add('vt');
+                    document.documentElement.classList.add('nav-' + nav);
+                    markPreIn();
+                }
+
+                /* 离开页：整页滑出动画播完后再跳转（移出页全程可见，不是直接消失） */
+                var DUR = 300;
+                document.addEventListener('click', function(e) {
+                    if (e.defaultPrevented) return;
+                    if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+                    var a = e.target && e.target.closest ? e.target.closest('a') : null;
+                    if (!a) return;
+                    var href = a.getAttribute('href') || '';
+                    if (!href || href.charAt(0) === '#' || a.hasAttribute('download')) return;
+                    if (a.target && a.target !== '_self') return;
+                    var url;
+                    try { url = new URL(a.href, location.href); } catch (err) { return; }
+                    if (url.origin !== location.origin) return;
+                    if (url.pathname === location.pathname && url.search === location.search) return;
+
+                    e.preventDefault();
+                    var t = typeFor(a.href);
+                    try { sessionStorage.setItem('hzk-nav', t); } catch (err) {}
+
+                    var body = document.body;
+                    body.style.transition = 'transform ' + DUR + 'ms cubic-bezier(0.4, 0, 0.2, 1), opacity ' + DUR + 'ms ease';
+                    body.style.transform = 'translateX(' + (t === 'back' ? '100vw' : '-100vw') + ')';
+                    body.style.opacity = '0.35';
+
+                    var done = false, timer = null;
+                    function go() {
+                        if (done) return;
+                        done = true;
+                        clearTimeout(timer);
+                        location.href = a.href;
+                    }
+                    body.addEventListener('transitionend', go, { once: true });
+                    timer = setTimeout(go, DUR + 90);
+                }, true);
+            })();
+        })();
+    </script>
+</body>
+</html>

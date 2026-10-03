@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>发送成功 · HZK 博客</title>
+    <meta name="robots" content="noindex" />
+    <style>
+        :root {
+            --bg: #fafafa; --bg-card: #ffffff; --bg-hover: #f3f4f6;
+            --text-primary: #1a1a1a; --text-secondary: #6b7280; --text-muted: #9ca3af;
+            --border: #e5e7eb;
+            --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            --font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+        [data-theme="dark"] {
+            --bg: #0a0a0a; --bg-card: #141414; --bg-hover: #1f1f1f;
+            --text-primary: #e5e5e5; --text-secondary: #a3a3a3; --text-muted: #6b6b6b;
+            --border: #262626;
+        }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: var(--font); background: var(--bg); color: var(--text-primary);
+            min-height: 100vh; display: flex; align-items: center; justify-content: center;
+            transition: background var(--transition), color var(--transition); text-align: center; padding: 24px;
+        }
+        .card { animation: popIn 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+        @keyframes popIn { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
+        .check {
+            width: 72px; height: 72px; border-radius: 50%; margin: 0 auto 24px;
+            background: rgba(7, 193, 96, 0.1); display: flex; align-items: center; justify-content: center;
+            animation: checkPulse 2s ease infinite;
+        }
+        @keyframes checkPulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(7, 193, 96, 0.25); } 50% { box-shadow: 0 0 0 16px rgba(7, 193, 96, 0); } }
+        .check svg { width: 34px; height: 34px; stroke: #07c160; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+        /* 对勾描线动画 */
+        .check svg path {
+            stroke-dasharray: 30; stroke-dashoffset: 30;
+            animation: drawCheck 0.55s cubic-bezier(0.65, 0, 0.35, 1) 0.4s forwards;
+        }
+        @keyframes drawCheck { to { stroke-dashoffset: 0; } }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+        h1 { font-size: 28px; font-weight: 700; margin-bottom: 10px; letter-spacing: -0.5px; animation: fadeUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.26s backwards; }
+        p { font-size: 16px; color: var(--text-secondary); margin-bottom: 36px; animation: fadeUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.34s backwards; }
+        .back-btn {
+            display: inline-flex; align-items: center; gap: 8px; padding: 11px 32px;
+            border: 1px solid var(--border); border-radius: 99px; font-size: 14px; font-family: var(--font);
+            color: var(--text-primary); background: var(--bg-card); cursor: pointer;
+            transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), background var(--transition), box-shadow 0.3s ease;
+            animation: fadeUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.42s backwards;
+        }
+        .back-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.08); }
+        .back-btn:active { transform: scale(0.94); }
+        .back-btn svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        .back-btn:hover svg { transform: translateX(-3px); }
+        @media (prefers-reduced-motion: reduce) {
+            .card, h1, p, .back-btn, .check, .check svg path { animation: none; }
+            .check svg path { stroke-dashoffset: 0; }
+        }
+
+        /* ===== 跨页面过渡（参考 14-news 报纸站的移页效果）=====
+           ⚠️ 跨文档过渡会合并新旧文档样式且新文档优先，所有页面必须持有完全相同的
+           规则集（fwd/back 两个方向下 old/new 四种角色），否则旧页面的移出动画
+           会被新文档的同名规则覆盖 —— 表现就是「旧页没动、新页直接盖上来」。 */
+        @view-transition { navigation: auto; }
+        html { overflow-x: clip; }
+
+        /* 关闭 UA 默认的淡入淡出；滑动动画由下方 types 规则提供 */
+        ::view-transition-old(root),
+        ::view-transition-new(root) { animation: none; }
+
+        @keyframes vtOutLeft  { to   { transform: translateX(-100vw); } }
+        @keyframes vtInLeft   { from { transform: translateX(-100vw); } }
+        @keyframes vtOutRight { to   { transform: translateX(100vw); } }
+        @keyframes vtInRight  { from { transform: translateX(100vw); } }
+
+        /* 前进（首页 → 子页面）：首页左移出 + 子页面从右滑入 */
+        :active-view-transition-type(fwd)::view-transition-old(root) {
+            animation: vtOutLeft 0.42s cubic-bezier(0.4, 0, 0.2, 1) both;
+        }
+        :active-view-transition-type(fwd)::view-transition-new(root) {
+            animation: vtInRight 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+        /* 返回（子页面 → 首页）：子页面右移出 + 首页从左滑入 */
+        :active-view-transition-type(back)::view-transition-old(root) {
+            animation: vtOutRight 0.42s cubic-bezier(0.4, 0, 0.2, 1) both;
+        }
+        :active-view-transition-type(back)::view-transition-new(root) {
+            animation: vtInLeft 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+
+        /* 兜底路径（浏览器不支持跨文档过渡）：到达页整页滑入。
+           不设 fill-mode，动画结束自动恢复，避免影响 fixed 元素定位。 */
+        @keyframes pageInRight { from { opacity: 0.4; transform: translateX(100vw); } }
+        @keyframes pageInLeft  { from { opacity: 0.4; transform: translateX(-100vw); } }
+        html.nav-fwd body  { animation: pageInRight 0.42s cubic-bezier(0.22, 1, 0.36, 1); }
+        html.nav-back body { animation: pageInLeft  0.42s cubic-bezier(0.22, 1, 0.36, 1); }
+
+        /* 过渡到达时抑制元素级入场动画：滑动本身已是入场动效，叠加会显得乱 */
+        html.vt .nav,
+        html.vt .header .logo,
+        html.vt .logo-img,
+        html.vt .header-actions,
+        html.vt .search-section,
+        html.vt .stats,
+        html.vt .post-item,
+        html.vt .post-tags .tag-chip,
+        html.vt .code,
+        html.vt .title,
+        html.vt .desc,
+        html.vt .search-box,
+        html.vt .back-btn,
+        html.vt .field,
+        html.vt .submit-btn,
+        html.vt .card,
+        html.vt h1,
+        html.vt p,
+        html.vt .page-desc { animation: none; }
+
+        /* 首屏内容直接可见，不参与二次动画 */
+        html.vt .reveal,
+        html.vt .rv.pre-in { opacity: 1; animation: none; }
+
+        @media (prefers-reduced-motion: reduce) {
+            html.nav-fwd body,
+            html.nav-back body { animation: none; }
+            :active-view-transition-type(fwd)::view-transition-old(root),
+            :active-view-transition-type(fwd)::view-transition-new(root),
+            :active-view-transition-type(back)::view-transition-old(root),
+            :active-view-transition-type(back)::view-transition-new(root) { animation: none !important; }
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="check">
+            <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+        </div>
+        <h1>发送成功</h1>
+        <p>留言已经送到，我会尽快查看，谢谢！</p>
+        <a class="back-btn" href="/">
+            <svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+            返回首页
+        </a>
+    </div>
+    <script>
+        (function() {
+            var saved = "light";
+            try { saved = localStorage.getItem("hzk-theme") || "light"; } catch (e) {}
+            document.documentElement.setAttribute("data-theme", saved);
+
+            /* ===== 页面过渡：方向类型标记 + 到达处理 + 旧浏览器兜底 ===== */
+            (function() {
+                var REDUCED = false;
+                try { REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+
+                function isHomeUrl(u) {
+                    try {
+                        var p = new URL(u, location.href).pathname;
+                        return p === '/' || p === '/index.html';
+                    } catch (e) { return false; }
+                }
+                /* 目标不是首页 → 前进 fwd；目标是首页 → 返回 back */
+                function typeFor(u) { return isHomeUrl(u) ? 'back' : 'fwd'; }
+
+                /* 让首屏内容直接可见：滑动本身已是入场动效，不再播放二次动画 */
+                function markPreIn() {
+                    var vh = window.innerHeight || 800;
+                    var els = document.querySelectorAll('.rv, .reveal');
+                    for (var i = 0; i < els.length; i++) {
+                        if (els[i].getBoundingClientRect().top < vh * 0.98) els[i].classList.add('pre-in');
+                    }
+                }
+
+                var hasVT = ('onpagereveal' in window) || ('onpageswap' in window);
+
+                if (hasVT) {
+                    /* 离开页：标记方向，供两个文档的 CSS 匹配各自角色 */
+                    window.addEventListener('pageswap', function(e) {
+                        if (!e.viewTransition) return;
+                        var to = '';
+                        try { to = (e.activation && e.activation.entry) ? e.activation.entry.url : ''; } catch (err) {}
+                        try { e.viewTransition.types.add(typeFor(to || location.href)); } catch (err) {}
+                    });
+                    /* 到达页：打标记抑制元素级动画，并补一次方向类型（双保险） */
+                    window.addEventListener('pagereveal', function(e) {
+                        if (!e.viewTransition) return;
+                        document.documentElement.classList.add('vt');
+                        try { e.viewTransition.types.add(typeFor(location.href)); } catch (err) {}
+                        markPreIn();
+                    });
+                    return;
+                }
+
+                /* ===== 兜底：不支持跨文档 View Transitions ===== */
+                if (REDUCED) return;
+
+                /* 到达页：读取来源页留下的方向标记，播放整页滑入 */
+                var nav = null;
+                try { nav = sessionStorage.getItem('hzk-nav'); sessionStorage.removeItem('hzk-nav'); } catch (e) {}
+                if (nav === 'fwd' || nav === 'back') {
+                    document.documentElement.classList.add('vt');
+                    document.documentElement.classList.add('nav-' + nav);
+                    markPreIn();
+                }
+
+                /* 离开页：整页滑出动画播完后再跳转（移出页全程可见，不是直接消失） */
+                var DUR = 300;
+                document.addEventListener('click', function(e) {
+                    if (e.defaultPrevented) return;
+                    if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+                    var a = e.target && e.target.closest ? e.target.closest('a') : null;
+                    if (!a) return;
+                    var href = a.getAttribute('href') || '';
+                    if (!href || href.charAt(0) === '#' || a.hasAttribute('download')) return;
+                    if (a.target && a.target !== '_self') return;
+                    var url;
+                    try { url = new URL(a.href, location.href); } catch (err) { return; }
+                    if (url.origin !== location.origin) return;
+                    if (url.pathname === location.pathname && url.search === location.search) return;
+
+                    e.preventDefault();
+                    var t = typeFor(a.href);
+                    try { sessionStorage.setItem('hzk-nav', t); } catch (err) {}
+
+                    var body = document.body;
+                    body.style.transition = 'transform ' + DUR + 'ms cubic-bezier(0.4, 0, 0.2, 1), opacity ' + DUR + 'ms ease';
+                    body.style.transform = 'translateX(' + (t === 'back' ? '100vw' : '-100vw') + ')';
+                    body.style.opacity = '0.35';
+
+                    var done = false, timer = null;
+                    function go() {
+                        if (done) return;
+                        done = true;
+                        clearTimeout(timer);
+                        location.href = a.href;
+                    }
+                    body.addEventListener('transitionend', go, { once: true });
+                    timer = setTimeout(go, DUR + 90);
+                }, true);
+            })();
+        })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>HZK · 博客</title>
+    <link>https://hzk-blog.netlify.app</link>
+    <description>HZK 的个人博客：技术学习笔记、编程实践与生活感悟。</description>
+    <language>zh-CN</language>
+    <atom:link href="https://hzk-blog.netlify.app/rss.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 02 Oct 2026 07:38:54 GMT</lastBuildDate>
+    <item>
+      <title>Markdown 入门指南</title>
+      <link>https://hzk-blog.netlify.app/blog/002-markdown-guide</link>
+      <guid isPermaLink="true">https://hzk-blog.netlify.app/blog/002-markdown-guide</guid>
+      <description>一篇完整的 Markdown 语法教程，从基础到进阶，帮助你快速上手写作。</description>
+      <pubDate>Sun, 05 Jul 2026 00:00:00 GMT</pubDate>
+      <category>教程</category>
+      <category>Markdown</category>
+    </item>
+    <item>
+      <title>Hello World - 我的第一篇博客</title>
+      <link>https://hzk-blog.netlify.app/blog/001-hello-world</link>
+      <guid isPermaLink="true">https://hzk-blog.netlify.app/blog/001-hello-world</guid>
+      <description>这是我的第一篇博客文章，记录开始写作的初衷和未来计划。</description>
+      <pubDate>Sun, 05 Jul 2026 00:00:00 GMT</pubDate>
+      <category>随笔</category>
+    </item>
+  </channel>
+</rss>

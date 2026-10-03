@@ -1,0 +1,86 @@
+# Netlify 配置文件
+
+[build]
+  # 发布目录（静态文件根目录）
+  publish = "."
+  # Netlify Functions 目录
+  functions = "netlify/functions"
+  # 构建命令：扫描 blog/ 生成文章清单 JSON
+  command = "node scripts/generate-posts.js"
+
+# 将 blog/ 目录的 HTML 文件打包进函数（作为备用数据源）
+[functions]
+  included_files = ["blog/**/*.html"]
+
+# 允许 /blog/* 路径访问（文章为独立 HTML 页面）
+[[headers]]
+  for = "/blog/*"
+  [headers.values]
+    Content-Type = "text/html; charset=utf-8"
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# 干净 URL：/blog/xxx → /blog/xxx.html
+# force=false：请求路径已有对应文件（如直接访问 .html）时不重写，避免循环
+[[redirects]]
+  from = "/blog/:slug"
+  to = "/blog/:slug.html"
+  status = 200
+  force = false
+
+# ===== 屏蔽源码目录的公开访问 =====
+# publish = "." 会把仓库根目录整体发布，导致函数源码 / 构建脚本 / Markdown 源被直接下载。
+# 以下规则让这些路径返回 404。不影响 /api/*（函数路由）与 /blog/*（文章正文）。
+[[redirects]]
+  from = "/netlify/*"
+  to = "/404.html"
+  status = 404
+
+[[redirects]]
+  from = "/scripts/*"
+  to = "/404.html"
+  status = 404
+
+[[redirects]]
+  from = "/posts/*"
+  to = "/404.html"
+  status = 404
+
+[[redirects]]
+  from = "/.workbuddy/*"
+  to = "/404.html"
+  status = 404
+
+# RSS 订阅源
+[[headers]]
+  for = "/rss.xml"
+  [headers.values]
+    Content-Type = "application/rss+xml; charset=utf-8"
+    Cache-Control = "public, max-age=3600"
+
+# 站点地图
+[[headers]]
+  for = "/sitemap.xml"
+  [headers.values]
+    Content-Type = "application/xml; charset=utf-8"
+    Cache-Control = "public, max-age=3600"
+
+# robots.txt
+[[headers]]
+  for = "/robots.txt"
+  [headers.values]
+    Content-Type = "text/plain; charset=utf-8"
+
+# posts.json 缓存控制
+[[headers]]
+  for = "/posts.json"
+  [headers.values]
+    Content-Type = "application/json"
+    Cache-Control = "no-cache"
+
+# Netlify Function 的 CORS 头（允许前端调用）
+[[headers]]
+  for = "/.netlify/functions/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
+    Access-Control-Allow-Methods = "GET, OPTIONS"
+    Access-Control-Allow-Headers = "Content-Type"

@@ -1,0 +1,20 @@
+# ===== Netlify 本地链接状态（netlify link 会生成，不应提交）=====
+.netlify/
+
+# ===== 依赖 =====
+node_modules/
+
+# ===== 开发/构建临时产物 =====
+.tmp-icons/
+*.log
+
+# ===== 编辑器与操作系统文件 =====
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# ===== 工作区笔记（仅本地保留，不随仓库公开）=====
+# 如需把开发笔记一起版本化，删掉下面这行即可
+.workbuddy/

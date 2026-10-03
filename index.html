@@ -1,0 +1,1461 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HZK · 博客</title>
+    <meta name="description" content="HZK 的个人博客：技术学习笔记、编程实践与生活感悟。" />
+    <link rel="canonical" href="https://hzk-blog.netlify.app/" />
+    <link rel="alternate" type="application/rss+xml" title="HZK · 博客 RSS" href="/rss.xml" />
+    <meta property="og:site_name" content="HZK · 博客" />
+    <meta property="og:title" content="HZK · 博客" />
+    <meta property="og:description" content="HZK 的个人博客：技术学习笔记、编程实践与生活感悟。" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://hzk-blog.netlify.app/" />
+    <meta property="og:image" content="https://hzk-blog.netlify.app/Logo.png" />
+    <meta property="og:locale" content="zh_CN" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="HZK · 博客" />
+    <meta name="twitter:description" content="HZK 的个人博客：技术学习笔记、编程实践与生活感悟。" />
+    <meta name="twitter:image" content="https://hzk-blog.netlify.app/Logo.png" />
+    <style>
+        :root {
+            --bg: #fafafa;
+            --bg-card: #ffffff;
+            --bg-hover: #f3f4f6;
+            --text-primary: #1a1a1a;
+            --text-secondary: #6b7280;
+            --text-muted: #9ca3af;
+            --border: #e5e7eb;
+            --border-light: #f0f0f0;
+            --shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 16px rgba(0, 0, 0, 0.04);
+            --shadow-hover: 0 1px 3px rgba(0, 0, 0, 0.06), 0 8px 32px rgba(0, 0, 0, 0.08);
+            --radius: 12px;
+            --radius-sm: 6px;
+            --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            --font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+        [data-theme="dark"] {
+            --bg: #0a0a0a;
+            --bg-card: #141414;
+            --bg-hover: #1f1f1f;
+            --text-primary: #e5e5e5;
+            --text-secondary: #a3a3a3;
+            --text-muted: #6b6b6b;
+            --border: #262626;
+            --border-light: #1a1a1a;
+            --shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 4px 16px rgba(0, 0, 0, 0.3);
+            --shadow-hover: 0 1px 3px rgba(0, 0, 0, 0.5), 0 8px 32px rgba(0, 0, 0, 0.5);
+        }
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: var(--font);
+            background: var(--bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            transition: background var(--transition), color var(--transition);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+        .container {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        /* ===== Header ===== */
+        .header {
+            padding: 48px 0 32px;
+            border-bottom: 1px solid var(--border-light);
+            transition: border-color var(--transition);
+        }
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .logo-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+        }
+        .logo-text {
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+            color: var(--text-primary);
+        }
+        .logo-dot {
+            color: var(--text-muted);
+            font-weight: 300;
+            margin: 0 2px;
+        }
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .icon-btn {
+            background: transparent;
+            border: none;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            transition: background var(--transition), color var(--transition), transform var(--transition);
+            padding: 0;
+        }
+        .icon-btn:hover {
+            background: var(--bg-hover);
+            color: var(--text-primary);
+            transform: scale(1.04);
+        }
+        .icon-btn svg {
+            width: 20px;
+            height: 20px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 1.8;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        /* ===== Search ===== */
+        .search-section {
+            padding: 24px 0 20px;
+        }
+        .search-input {
+            width: 100%;
+            padding: 12px 18px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            background: var(--bg-card);
+            color: var(--text-primary);
+            font-size: 15px;
+            font-family: var(--font);
+            outline: none;
+            transition: border-color var(--transition), box-shadow var(--transition), background var(--transition);
+        }
+        .search-input::placeholder {
+            color: var(--text-muted);
+        }
+        .search-input:focus {
+            border-color: var(--text-primary);
+            box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.04);
+        }
+        [data-theme="dark"] .search-input:focus {
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.06);
+        }
+        /* ===== Stats ===== */
+        .stats {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 4px 2px 16px;
+            font-size: 13px;
+            color: var(--text-muted);
+            letter-spacing: 0.2px;
+            border-bottom: 1px solid var(--border-light);
+            transition: border-color var(--transition);
+        }
+        .stats-count {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .stats-count .number {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+        .stats-filter {
+            color: var(--text-secondary);
+            font-size: 13px;
+        }
+        /* ===== Pagination ===== */
+        .pagination {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 32px 0 8px;
+            flex-wrap: wrap;
+        }
+        .pagination-btn {
+            min-width: 36px;
+            height: 36px;
+            padding: 0 10px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            background: var(--bg-card);
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-family: var(--font);
+            cursor: pointer;
+            transition: all var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .pagination-btn:hover:not(:disabled):not(.active) {
+            border-color: var(--text-muted);
+            color: var(--text-primary);
+            background: var(--bg-hover);
+        }
+        .pagination-btn.active {
+            background: var(--text-primary);
+            color: var(--bg);
+            border-color: var(--text-primary);
+            cursor: default;
+        }
+        .pagination-btn:disabled {
+            opacity: 0.35;
+            cursor: not-allowed;
+        }
+        .pagination-dots {
+            color: var(--text-muted);
+            padding: 0 4px;
+            font-size: 14px;
+            user-select: none;
+        }
+        /* ===== Post List ===== */
+        #postContainer {
+            padding-top: 4px;
+            min-height: 240px;
+        }
+        .post-item {
+            display: block;
+            padding: 18px 12px;
+            border-bottom: 1px solid var(--border-light);
+            cursor: pointer;
+            transition: padding var(--transition), background var(--transition);
+            margin: 0 -12px;
+            border-radius: var(--radius-sm);
+        }
+        .post-item:hover {
+            background: var(--bg-hover);
+            padding-left: 16px;
+            padding-right: 16px;
+        }
+        .post-item:last-child {
+            border-bottom: none;
+        }
+        .post-title {
+            font-size: 17px;
+            font-weight: 500;
+            letter-spacing: -0.2px;
+            color: var(--text-primary);
+            transition: color var(--transition);
+        }
+        .post-item:hover .post-title {
+            color: var(--text-secondary);
+        }
+        .post-meta {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-top: 4px;
+            font-size: 13px;
+            color: var(--text-muted);
+            letter-spacing: 0.2px;
+        }
+        .post-meta .sep {
+            color: var(--border);
+        }
+        .post-excerpt {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-top: 6px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            line-height: 1.6;
+        }
+        .post-item {
+            position: relative;
+            animation: postIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+        }
+        /* 左侧指示条：hover 时从中间展开 */
+        .post-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 3px;
+            height: 0;
+            background: var(--text-primary);
+            border-radius: 99px;
+            opacity: 0;
+            transform: translateY(-50%);
+            transition: height 0.38s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.25s ease;
+        }
+        .post-item:hover::before {
+            height: 56%;
+            opacity: 1;
+        }
+        @keyframes postIn {
+            from {
+                opacity: 0;
+                transform: translateY(16px) scale(0.985);
+            }
+            to {
+                opacity: 1;
+                transform: none;
+            }
+        }
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: none;
+            }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .post-item { animation: none; }
+        }
+        .post-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 8px;
+        }
+        .tag-chip {
+            display: inline-block;
+            padding: 2px 10px;
+            border: 1px solid var(--border);
+            border-radius: 99px;
+            font-size: 12px;
+            color: var(--text-secondary);
+            background: var(--bg-card);
+            letter-spacing: 0.2px;
+            cursor: default;
+            transition: border-color var(--transition), color var(--transition), transform var(--transition), background var(--transition);
+        }
+        .tag-chip:hover {
+            border-color: var(--text-muted);
+            color: var(--text-primary);
+            transform: translateY(-1px);
+        }
+
+        .loading-state,
+        .empty-state {
+            text-align: center;
+            padding: 80px 20px;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+        .loading-state .spinner {
+            display: inline-block;
+            width: 28px;
+            height: 28px;
+            border: 2px solid var(--border);
+            border-top-color: var(--text-primary);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-bottom: 16px;
+        }
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        .empty-state .empty-icon {
+            font-size: 36px;
+            margin-bottom: 12px;
+            opacity: 0.4;
+        }
+        /* ===== Footer ===== */
+        .footer {
+            padding: 48px 0 40px;
+            margin-top: 20px;
+            border-top: 1px solid var(--border-light);
+            transition: border-color var(--transition);
+        }
+        .footer-inner {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px 30px;
+        }
+        .footer-copy {
+            font-size: 13px;
+            color: var(--text-muted);
+            letter-spacing: 0.2px;
+        }
+        .footer-copy a {
+            color: var(--text-secondary);
+            transition: color var(--transition);
+        }
+        .footer-copy a:hover {
+            color: var(--text-primary);
+        }
+        .footer-links {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+        .footer-links a {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: var(--radius-sm);
+            font-size: 13px;
+            color: var(--text-secondary);
+            transition: background var(--transition), color var(--transition);
+            cursor: pointer;
+        }
+        .footer-links a:hover {
+            background: var(--bg-hover);
+            color: var(--text-primary);
+        }
+        .footer-links a svg {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+        }
+        .footer-links a .label {
+            font-size: 13px;
+            letter-spacing: 0.2px;
+        }
+        /* ===== Cookie Banner ===== */
+        .cookie-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 999;
+            background: var(--bg-card);
+            border-top: 1px solid var(--border);
+            box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.08);
+            padding: 20px 24px;
+            transform: translateY(100%);
+            transition: transform 0.4s ease, background var(--transition), border-color var(--transition);
+        }
+        .cookie-banner.visible {
+            transform: translateY(0);
+        }
+        .cookie-banner .cookie-inner {
+            max-width: 680px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+        .cookie-banner .cookie-text {
+            font-size: 14px;
+            color: var(--text-secondary);
+            flex: 1;
+            min-width: 200px;
+        }
+        .cookie-banner .cookie-text strong {
+            color: var(--text-primary);
+        }
+        .cookie-banner .cookie-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .cookie-banner .cookie-btn {
+            padding: 8px 18px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            background: var(--bg);
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-family: var(--font);
+            cursor: pointer;
+            transition: all var(--transition);
+            white-space: nowrap;
+        }
+        .cookie-banner .cookie-btn:hover {
+            background: var(--bg-hover);
+            border-color: var(--text-muted);
+        }
+        .cookie-banner .cookie-btn.primary {
+            background: var(--text-primary);
+            color: var(--bg);
+            border-color: var(--text-primary);
+        }
+        .cookie-banner .cookie-btn.primary:hover {
+            opacity: 0.8;
+        }
+        .cookie-banner .cookie-btn.essential {
+            border-color: var(--text-muted);
+            color: var(--text-muted);
+        }
+        .cookie-banner .cookie-btn.essential:hover {
+            border-color: var(--text-secondary);
+            color: var(--text-secondary);
+        }
+        .cookie-banner .cookie-btn.decline {
+            border-color: transparent;
+            color: var(--text-muted);
+        }
+        .cookie-banner .cookie-btn.decline:hover {
+            color: var(--text-secondary);
+            background: var(--bg-hover);
+        }
+        /* ===== 动画系统 ===== */
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: none; }
+        }
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: none; }
+        }
+        @keyframes logoPop {
+            from { opacity: 0; transform: scale(0.55) rotate(-14deg); }
+            to { opacity: 1; transform: none; }
+        }
+        @keyframes chipPop {
+            from { opacity: 0; transform: scale(0.7) translateY(4px); }
+            to { opacity: 1; transform: none; }
+        }
+        @keyframes countPulse {
+            0% { transform: scale(1); }
+            45% { transform: scale(1.32); color: var(--text-primary); }
+            100% { transform: scale(1); }
+        }
+        @keyframes shimmer {
+            0% { background-position: -340px 0; }
+            100% { background-position: 340px 0; }
+        }
+        @keyframes iconSpin {
+            from { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(0.82); }
+            to { transform: rotate(360deg) scale(1); }
+        }
+
+        /* 头部逐元素入场 */
+        .header .logo { animation: slideInLeft 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.05s backwards; }
+        .logo-img { animation: logoPop 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.12s backwards; }
+        .header-actions { animation: slideInRight 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.15s backwards; }
+        .search-section { animation: fadeUp 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.22s backwards; }
+        .stats { animation: fadeUp 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.3s backwards; }
+
+        /* 搜索框聚焦：轻微上浮 + 柔和光晕 */
+        .search-input:focus {
+            transform: translateY(-1px);
+            box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.045), 0 6px 22px rgba(0, 0, 0, 0.06);
+        }
+        [data-theme="dark"] .search-input:focus {
+            box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.07), 0 6px 22px rgba(0, 0, 0, 0.4);
+        }
+        .search-input { transition: border-color var(--transition), box-shadow 0.35s ease, background var(--transition), transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); }
+
+        /* 文章总数数字变化时脉冲 */
+        .stats-count .number.pulse { animation: countPulse 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); display: inline-block; }
+
+        /* 标签弹入 */
+        .post-tags .tag-chip {
+            animation: chipPop 0.42s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+        }
+        .tag-chip:hover { transform: translateY(-2px) scale(1.04); }
+
+        /* 分页交互 */
+        .pagination { animation: fadeUp 0.55s cubic-bezier(0.22, 1, 0.36, 1) backwards; }
+        .pagination-btn { transition: all var(--transition), transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease; }
+        .pagination-btn:hover:not(:disabled):not(.active) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+        }
+        [data-theme="dark"] .pagination-btn:hover:not(:disabled):not(.active) { box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5); }
+        .pagination-btn:active:not(:disabled):not(.active) { transform: scale(0.92); }
+        .pagination-btn.active { animation: chipPop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); }
+
+        /* 主题按钮：图标旋转 */
+        .icon-btn svg { transition: transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        .icon-btn:hover svg { transform: rotate(20deg); }
+        .icon-btn.spin svg { animation: iconSpin 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        .icon-btn:active { transform: scale(0.9); }
+
+        /* 页脚 */
+        .footer-links a { transition: background var(--transition), color var(--transition), transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        .footer-links a:hover { transform: translateY(-2px); }
+        .footer-links a svg { transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        .footer-links a:hover svg { transform: scale(1.18) rotate(-8deg); }
+        .footer-copy a { transition: color var(--transition); }
+
+        /* Cookie 按钮点击反馈 */
+        .cookie-btn { transition: all var(--transition), transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        .cookie-btn:active { transform: scale(0.94); }
+
+        /* 通用滚动入场（JS 用 IntersectionObserver 加 .in） */
+        .reveal {
+            opacity: 0;
+            transform: translateY(22px);
+            transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+                        transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+            will-change: opacity, transform;
+        }
+        .reveal.in { opacity: 1; transform: none; }
+
+        /* 骨架屏（加载态） */
+        .skeleton-item {
+            padding: 18px 12px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .skeleton-line {
+            height: 12px;
+            border-radius: 6px;
+            background: linear-gradient(90deg, var(--bg-hover) 0%, var(--border-light) 50%, var(--bg-hover) 100%);
+            background-size: 340px 100%;
+            animation: shimmer 1.3s linear infinite;
+            margin-bottom: 10px;
+        }
+        .skeleton-line.w-60 { width: 60%; height: 15px; }
+        .skeleton-line.w-30 { width: 30%; height: 10px; }
+        .skeleton-line.w-85 { width: 85%; }
+        .skeleton-line:last-child { margin-bottom: 0; }
+
+        /* 空状态图标 */
+        @keyframes emptyBob {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-7px); }
+        }
+        .empty-state .empty-icon { animation: emptyBob 2.4s ease-in-out infinite; display: inline-block; }
+
+        @media (prefers-reduced-motion: reduce) {
+            .header .logo,
+            .logo-img,
+            .header-actions,
+            .search-section,
+            .stats,
+            .pagination,
+            .post-tags .tag-chip,
+            .empty-state .empty-icon,
+            .skeleton-line {
+                animation: none;
+            }
+            .reveal { opacity: 1; transform: none; transition: none; }
+        }
+
+        /* ===== 跨页面过渡（参考 14-news 报纸站的移页效果）=====
+           跨文档过渡时新旧文档样式会合并且新文档优先，因此用 view-transition types
+           标记方向，每个文档只声明自己在该方向下的角色，避免同名伪元素规则互相覆盖。 */
+        @view-transition { navigation: auto; }
+        html { overflow-x: clip; }
+
+        /* 关闭 UA 默认的淡入淡出；滑动动画由下方 types 规则提供 */
+        ::view-transition-old(root),
+        ::view-transition-new(root) { animation: none; }
+
+        /* 兜底路径（浏览器不支持跨文档过渡）：到达页整页滑入。
+           不设 fill-mode，动画结束自动恢复，避免影响 fixed 元素定位。 */
+        @keyframes pageInRight { from { opacity: 0.4; transform: translateX(100vw); } }
+        @keyframes pageInLeft { from { opacity: 0.4; transform: translateX(-100vw); } }
+        html.nav-fwd body { animation: pageInRight 0.42s cubic-bezier(0.22, 1, 0.36, 1); }
+        html.nav-back body { animation: pageInLeft 0.42s cubic-bezier(0.22, 1, 0.36, 1); }
+
+        /* 首页（根页面）在各方向下的角色 */
+        @keyframes vtOutLeft { to { transform: translateX(-100vw); } }
+        @keyframes vtInLeft { from { transform: translateX(-100vw); } }
+        /* 前进：作为旧页面左移出（播完才隐藏，全程参与动画） */
+        :active-view-transition-type(fwd)::view-transition-old(root) {
+            animation: vtOutLeft 0.42s cubic-bezier(0.4, 0, 0.2, 1) both;
+        }
+        /* 返回：作为新页面从左侧滑入 */
+        :active-view-transition-type(back)::view-transition-new(root) {
+            animation: vtInLeft 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+
+        /* ⚠️ 必须同时声明另一侧角色的规则：跨文档过渡会合并新旧文档样式且新文档优先，
+           若某个文档缺少这部分，它作为旧页面时的移出动画就会被新文档覆盖而失效。 */
+        @keyframes vtOutRight { to { transform: translateX(100vw); } }
+        @keyframes vtInRight { from { transform: translateX(100vw); } }
+        :active-view-transition-type(fwd)::view-transition-new(root) {
+            animation: vtInRight 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+        :active-view-transition-type(back)::view-transition-old(root) {
+            animation: vtOutRight 0.42s cubic-bezier(0.4, 0, 0.2, 1) both;
+        }
+
+        /* 过渡到达时抑制元素级入场动画，避免与滑动叠加 */
+        html.vt .header .logo,
+        html.vt .logo-img,
+        html.vt .header-actions,
+        html.vt .search-section,
+        html.vt .stats,
+        html.vt .post-item,
+        html.vt .post-tags .tag-chip { animation: none; }
+        html.vt .reveal { opacity: 1; }
+
+        @media (prefers-reduced-motion: reduce) {
+            html.nav-fwd body,
+            html.nav-back body { animation: none; }
+            :active-view-transition-type(fwd)::view-transition-old(root),
+            :active-view-transition-type(back)::view-transition-new(root) { animation: none !important; }
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 600px) {
+            .header {
+                padding: 28px 0 20px;
+            }
+            .logo-text {
+                font-size: 16px;
+            }
+            .header-inner {
+                flex-wrap: wrap;
+                gap: 12px;
+            }
+            .header-actions {
+                margin-left: auto;
+            }
+            .post-item {
+                padding: 14px 12px;
+            }
+            .post-title {
+                font-size: 16px;
+            }
+            .footer-inner {
+                flex-direction: column;
+                align-items: stretch;
+                text-align: center;
+            }
+            .footer-links {
+                justify-content: center;
+            }
+            .footer-links a {
+                padding: 4px 10px;
+            }
+            .footer-links a .label {
+                font-size: 12px;
+            }
+            .cookie-banner {
+                padding: 16px 20px;
+            }
+            .cookie-banner .cookie-inner {
+                flex-direction: column;
+                align-items: stretch;
+                text-align: center;
+            }
+            .cookie-banner .cookie-actions {
+                justify-content: center;
+            }
+            .cookie-banner .cookie-btn {
+                padding: 6px 14px;
+                font-size: 12px;
+            }
+        }
+        @media (max-width: 420px) {
+            .container {
+                padding: 0 16px;
+            }
+            .footer-links {
+                gap: 2px;
+            }
+            .footer-links a {
+                padding: 4px 8px;
+            }
+            .footer-links a .label {
+                display: none;
+            }
+            .cookie-banner .cookie-actions {
+                flex-wrap: wrap;
+            }
+            .cookie-banner .cookie-btn {
+                flex: 1;
+                min-width: 80px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="container header-inner">
+            <div class="logo">
+                <img src="Logo.png" alt="HZK" class="logo-img" />
+                <span class="logo-text">HZK<span class="logo-dot">·</span>博客</span>
+            </div>
+            <div class="header-actions">
+                <button id="themeToggle" class="icon-btn" title="切换主题">
+                    <svg id="themeIcon" viewBox="0 0 24 24">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <section class="search-section">
+        <div class="container">
+            <input type="text" id="searchInput" class="search-input" placeholder="搜索文章..." />
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="stats">
+            <span class="stats-count">
+                共 <span class="number" id="postCount">0</span> 篇文章
+            </span>
+            <span class="stats-filter" id="filterInfo"></span>
+        </div>
+    </div>
+
+    <main class="container">
+        <div id="postContainer">
+            <div class="loading-state">
+                <div class="spinner"></div>
+                <div>加载中</div>
+            </div>
+        </div>
+        <div id="pagination" class="pagination"></div>
+    </main>
+
+    <footer class="footer reveal">
+        <div class="container footer-inner">
+            <div class="footer-copy">
+                &copy; 2026 HZK
+            </div>
+            <div class="footer-links">
+                <a href="/contact" title="联系我">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                        <polyline points="22,6 12,13 2,6"/>
+                    </svg>
+                    <span class="label">联系</span>
+                </a>
+                <a href="/rss.xml" title="RSS 订阅">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M6.18 15.64a2.18 2.18 0 0 1 2.18 2.18C8.36 19 7.38 20 6.18 20 5 20 4 19 4 17.82a2.18 2.18 0 0 1 2.18-2.18M4 4.44A15.56 15.56 0 0 1 19.56 20h-2.83A12.73 12.73 0 0 0 4 7.27zm0 5.66a9.9 9.9 0 0 1 9.9 9.9h-2.83A7.07 7.07 0 0 0 4 12.93z"/>
+                    </svg>
+                    <span class="label">RSS</span>
+                </a>
+                <a href="https://www.github.com/HZK-Team" target="_blank" rel="noopener" title="GitHub">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.15 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.62.24 2.85.12 3.15.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                    </svg>
+                    <span class="label">GitHub</span>
+                </a>
+                <a href="tencent://message/?uin=2237413947" title="QQ">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M21.395 15.035a39.548 39.548 0 0 0-.803-2.264l-1.079-2.695c.001-.032.014-.562.014-.836C19.526 4.632 17.351 0 12 0S4.474 4.632 4.474 9.241c0 .274.013.804.014.836l-1.08 2.695a39.547 39.547 0 0 0-.802 2.264c-.764 2.462-.517 3.484-.329 3.508.405.052 1.565-1.828 1.565-1.828 0 1.203.622 2.77 1.965 3.892-.502.155-1.118.395-1.513.683-.356.26-.311.524-.247.63.282.475 4.838.304 6.026.156 1.188.148 5.744.319 6.027-.156.063-.106.108-.37-.248-.63-.394-.288-1.01-.528-1.513-.683 1.343-1.122 1.964-2.689 1.964-3.892 0 0 1.16 1.88 1.566 1.828.187-.024.434-1.046-.33-3.508z"/>
+                    </svg>
+                    <span class="label">QQ</span>
+                </a>
+                <a href="#" title="微信" onclick="alert('微信号: make_html'); return false;">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 01.213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 00.167-.054l1.903-1.114a.864.864 0 01.717-.098 10.16 10.16 0 002.837.403c.276 0 .543-.027.811-.05-.857-2.578.157-4.972 1.932-6.446 1.703-1.415 3.882-1.98 5.853-1.838-.576-3.583-4.196-6.348-8.596-6.348zM5.785 5.991c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 01-1.162 1.178A1.17 1.17 0 014.623 7.17c0-.651.52-1.18 1.162-1.18zm5.813 0c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 01-1.162 1.178 1.17 1.17 0 01-1.162-1.178c0-.651.52-1.18 1.162-1.18zm7.77 4.237c-2.638 0-4.776 1.905-4.776 4.255 0 2.35 2.138 4.255 4.776 4.255.613 0 1.2-.107 1.742-.296.158-.05.338-.025.493.06l1.374.806a.255.255 0 00.132.04.23.23 0 00.228-.23c0-.053-.023-.108-.036-.16l-.304-1.153a.46.46 0 01.164-.506c1.283-.948 2.065-2.262 2.065-3.676 0-2.35-2.138-4.255-4.776-4.255zm-2.314 2.076c.504 0 .913.416.913.928 0 .512-.409.928-.913.928a.921.921 0 01-.913-.928c0-.512.409-.928.913-.928zm4.628 0c.504 0 .913.416.913.928 0 .512-.409.928-.913.928a.921.921 0 01-.913-.928c0-.512.409-.928.913-.928z"/>
+                    </svg>
+                    <span class="label">微信</span>
+                </a>
+                <a href="mailto:hzk_team@163.com" title="邮箱">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                    </svg>
+                    <span class="label">邮箱</span>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <div id="cookieBanner" class="cookie-banner">
+        <div class="cookie-inner">
+            <div class="cookie-text">
+                <strong>Cookie 设置</strong><br />
+                我们使用 Cookie 来改善您的浏览体验。您可以选择接受全部、仅接受必要的 Cookie，或拒绝所有非必要的 Cookie。所有选项都允许加载文章列表。
+            </div>
+            <div class="cookie-actions">
+                <button class="cookie-btn primary" data-choice="all">全部同意</button>
+                <button class="cookie-btn essential" data-choice="essential">仅必要的 Cookie</button>
+                <button class="cookie-btn decline" data-choice="decline">不同意</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- HZK_POSTS_START -->
+    <script>window.HZK_POSTS=[{"file":"001-hello-world.html","url":"/blog/001-hello-world","title":"Hello World - 我的第一篇博客","date":"2026-07-05","excerpt":"这是我的第一篇博客文章，记录开始写作的初衷和未来计划。","tags":["随笔"],"content":"欢迎来到我的博客！这是我的第一篇文章，也是一个全新的开始。 为什么开始写博客？ 写博客对我来说有几个重要的意义： 整理思路 — 把零散的知识系统化，写出来的过程就是思考的过程 记录成长 — 回头看看自己走过的路，知道进步在哪里 分享知识 — 如果我的文字能帮到哪怕一个人，那就值得了 我会写些什么？ 这个博客将主要涵盖以下内容： 技术学习笔记与心得 编程实践与项目经验 工具使用技巧 偶尔的生活感悟 好的开始是成功的一半。 希望我能坚持写下去。感谢你的阅读！"},{"file":"002-markdown-guide.html","url":"/blog/002-markdown-guide","title":"Markdown 入门指南","date":"2026-07-05","excerpt":"一篇完整的 Markdown 语法教程，从基础到进阶，帮助你快速上手写作。","tags":["教程","Markdown"],"content":"Markdown 是一种轻量级标记语言，用简单的符号就能写出格式丰富的文本。本文将带你从零开始掌握 Markdown 的核心语法。 一、标题 使用 # 号表示标题，数量对应层级： # 一级标题 ## 二级标题 ### 三级标题 #### 四级标题 二、文本格式 语法 效果 说明 **粗体** 粗体 两个星号包裹 *斜体* 斜体 一个星号包裹 ~~删除线~~ 删除线 两个波浪线 `行内代码` 代码 反引号包裹 三、列表 无序列表 - 苹果 - 香蕉 - 橙子 渲染效果： 苹果 香蕉 橙子 有序列表 1. 第一步 2. 第二步 3. 第三步 渲染效果： 第一步 第二步 第三步 四、链接与图片 [链接文字](https://example.com) ![图片描述](image-url.png) 五、代码块 使用三个反引号包裹代码块，可以指定语言（展示语法本身时，外层用四个反引号包裹内层的三个）： ```javascript function hello() { console.log(\"Hello, Markdown!\"); } ``` 渲染效果： function hello() { console.log(\"Hello, Markdown!\"); } 六、引用 > 这是一段引用文字 > 可以有多行 渲染效果： 这是一段引用文字，可以有多行。 七、表格 | 姓名 | 年龄 | 城市 | |------|------|------| | 张三 | 25 | 北京 | | 李四 | 30 | 上海 | 渲染效果： 姓名 年龄 城市 张三 25 北京 李四 30 上海 八、分隔线 --- 渲染效果： 提示： 你可以使用 Typora、VS Code、MarkText 等编辑器编写 Markdown。 在这个博客上写作 现在，本博客已经内置了 Markdown 管线，不再需要手动转换 HTML： 在 posts/ 目录下新建 .md 文件 文件开头的 front-matter 定义元数据 写正文，然后运行构建脚本 --- title: 文章标题 date: 2026-07-05 tags: [教程, Markdown] excerpt: 一句话摘要 --- 正文内容... 构建命令： node scripts/generate-posts.js 部署到 Netlify 时构建会自动执行，只需要把 posts/ 里的源文件提交到仓库即可。 接下来你就可以用 Markdown 进行你的高效创作了"}];</script>
+    <!-- HZK_POSTS_END -->
+
+    <script>
+        (function() {
+            'use strict';
+
+            var container = document.getElementById('postContainer');
+            var searchInput = document.getElementById('searchInput');
+            var filterInfo = document.getElementById('filterInfo');
+            var postCount = document.getElementById('postCount');
+            var themeToggle = document.getElementById('themeToggle');
+            var themeIcon = document.getElementById('themeIcon');
+            var cookieBanner = document.getElementById('cookieBanner');
+            var cookieBtns = cookieBanner.querySelectorAll('.cookie-btn');
+            var paginationEl = document.getElementById('pagination');
+
+            var allPosts = [];
+            var currentFilter = '';
+            var cookieConsent = null;
+            var currentPage = 1;
+            var POSTS_PER_PAGE = 10;
+
+            /* ========== Cookie 工具函数 ========== */
+            var THEME_KEY = 'hzk-theme';
+            var COOKIE_CONSENT_KEY = 'hzk-cookie-consent';
+
+            function getCookie(name) {
+                var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+                return match ? match[2] : null;
+            }
+
+            function setCookie(name, value, days) {
+                var expires = '';
+                if (days) {
+                    var date = new Date();
+                    date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+                    expires = '; expires=' + date.toUTCString();
+                }
+                document.cookie = name + '=' + value + '; path=/; SameSite=Lax' + expires;
+            }
+
+            /* ========== 本地模拟数据 ========== */
+            var MOCK_POSTS = [
+                {
+                    file: '001-hello-world.html',
+                    url: 'blog/001-hello-world.html',
+                    title: 'Hello World - 我的第一篇博客',
+                    date: '2026-07-05',
+                    excerpt: '这是我的第一篇博客文章，记录开始写作的初衷和未来计划。',
+                    tags: ['随笔']
+                },
+                {
+                    file: '002-markdown-guide.html',
+                    url: 'blog/002-markdown-guide.html',
+                    title: 'Markdown 入门指南',
+                    date: '2026-07-05',
+                    excerpt: '一篇完整的 Markdown 语法教程，从基础到进阶，帮助你快速上手写作。',
+                    tags: ['教程', 'Markdown']
+                }
+            ];
+
+            /* ========== 判断运行环境 ========== */
+            function isLocalEnv() {
+                var proto = window.location.protocol;
+                return proto === 'file:' ||
+                       window.location.hostname === 'localhost' ||
+                       window.location.hostname === '127.0.0.1' ||
+                       window.location.hostname === '';
+            }
+
+            /* ========== 主题管理 ========== */
+            function setThemeIcon(theme) {
+                if (theme === 'dark') {
+                    themeIcon.innerHTML =
+                        '<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>';
+                } else {
+                    themeIcon.innerHTML =
+                        '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+                }
+            }
+
+            function setTheme(theme) {
+                if (cookieConsent === 'decline') return;
+                document.documentElement.setAttribute('data-theme', theme);
+                setThemeIcon(theme);
+                // 只有 "all" 才保存主题偏好
+                if (cookieConsent === 'all') {
+                    try {
+                        localStorage.setItem(THEME_KEY, theme);
+                    } catch (e) {}
+                }
+            }
+
+            function toggleTheme() {
+                if (cookieConsent === 'decline') {
+                    alert('您已选择不同意 Cookie，主题偏好无法保存。');
+                    return;
+                }
+                // 图标旋转反馈
+                themeToggle.classList.remove('spin');
+                void themeToggle.offsetWidth;
+                themeToggle.classList.add('spin');
+                var current = document.documentElement.getAttribute('data-theme');
+                setTheme(current === 'light' ? 'dark' : 'light');
+            }
+
+            /* ========== Cookie 同意逻辑 ========== */
+            function checkConsent() {
+                var stored = getCookie(COOKIE_CONSENT_KEY);
+                if (stored === 'all' || stored === 'essential' || stored === 'decline') {
+                    cookieConsent = stored;
+                    cookieBanner.classList.remove('visible');
+                    return true;
+                }
+                // 首次访问，显示横幅
+                cookieBanner.classList.add('visible');
+                return false;
+            }
+
+            function handleConsent(choice) {
+                cookieConsent = choice;
+                setCookie(COOKIE_CONSENT_KEY, choice, 365);
+                cookieBanner.classList.remove('visible');
+
+                if (choice === 'decline') {
+                    // 不同意：清除已存储的偏好，主题偏好无法保存
+                    try { localStorage.removeItem(THEME_KEY); } catch (e) {}
+                    document.documentElement.setAttribute('data-theme', 'light');
+                    setThemeIcon('light');
+                } else if (choice === 'essential') {
+                    // 仅必要：清除偏好，使用默认主题
+                    try { localStorage.removeItem(THEME_KEY); } catch (e) {}
+                    document.documentElement.setAttribute('data-theme', 'light');
+                    setThemeIcon('light');
+                } else if (choice === 'all') {
+                    // 全部同意：恢复已保存的主题偏好
+                    var savedTheme = 'light';
+                    try { savedTheme = localStorage.getItem(THEME_KEY) || 'light'; } catch (e) {}
+                    document.documentElement.setAttribute('data-theme', savedTheme);
+                    setThemeIcon(savedTheme);
+                }
+                // 所有选项都允许加载文章列表
+                loadPosts();
+            }
+
+            cookieBtns.forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    handleConsent(this.dataset.choice);
+                });
+            });
+
+            /* ========== 数字滚动计数 ========== */
+            function setPostCount(target) {
+                /* 页面过渡到达时直接显示最终值：否则滑动快照里数字还停在 0，观感突兀 */
+                if (document.documentElement.classList.contains('vt')) {
+                    postCount.textContent = target;
+                    return;
+                }
+                var from = parseInt(postCount.textContent, 10);
+                if (isNaN(from)) from = 0;
+                postCount.classList.remove('pulse');
+                void postCount.offsetWidth; // 重排，让脉冲动画可重复播放
+                postCount.classList.add('pulse');
+                if (from === target || !window.requestAnimationFrame) {
+                    postCount.textContent = target;
+                    return;
+                }
+                var dur = 650, t0 = null;
+                function step(ts) {
+                    // 计数途中若过渡到达（.vt 出现），直接跳到终值
+                    if (document.documentElement.classList.contains('vt')) {
+                        postCount.textContent = target;
+                        return;
+                    }
+                    if (t0 === null) t0 = ts;
+                    var p = Math.min((ts - t0) / dur, 1);
+                    var eased = 1 - Math.pow(1 - p, 3); // easeOutCubic
+                    postCount.textContent = Math.round(from + (target - from) * eased);
+                    if (p < 1) requestAnimationFrame(step);
+                }
+                requestAnimationFrame(step);
+            }
+
+            /* ========== 加载文章 ========== */
+
+            // 404 页搜索跳转支持：/?q=关键词 → 自动填入搜索框并执行过滤
+            function applyUrlQuery() {
+                if (window.location.protocol === 'file:') return;
+                var q = '';
+                try {
+                    q = new URLSearchParams(window.location.search).get('q') || '';
+                } catch (e) { return; }
+                if (q) {
+                    searchInput.value = q;
+                    filterPosts(q);
+                }
+            }
+
+            function loadPosts() {
+                /* 1) 内联数据（构建时注入）→ 同步渲染：零请求、零等待，返回首页不再闪骨架屏。
+                 *    数据在 View Transition 快照前就已渲染完成，滑动进入即是完整列表。 */
+                if (window.HZK_POSTS && window.HZK_POSTS.length) {
+                    allPosts = window.HZK_POSTS.slice();
+                    renderPosts(allPosts);
+                    setPostCount(allPosts.length);
+                    applyUrlQuery();
+                    return;
+                }
+
+                /* 2) 兜底：无内联数据（未构建 / 直接打开源文件）→ 骨架屏 + fetch */
+                var skeleton = '';
+                for (var s = 0; s < 4; s++) {
+                    skeleton += '<div class="skeleton-item">' +
+                        '<div class="skeleton-line w-60"></div>' +
+                        '<div class="skeleton-line w-30"></div>' +
+                        '<div class="skeleton-line w-85"></div>' +
+                        '</div>';
+                }
+                container.innerHTML = skeleton;
+
+                // file:// 协议下 fetch 不可用，只能用模拟数据
+                if (window.location.protocol === 'file:') {
+                    setTimeout(function() {
+                        allPosts = MOCK_POSTS.slice();
+                        renderPosts(allPosts);
+                        setPostCount(allPosts.length);
+                        applyUrlQuery();
+                    }, 300);
+                    return;
+                }
+
+                // 本地 localhost 和部署环境统一逻辑：
+                // 优先 fetch /posts.json（由 scripts/generate-posts.js 生成）
+                // 失败时回退到 Netlify Function，再失败才用模拟数据
+                fetch('posts.json')
+                    .then(function(res) {
+                        if (!res.ok) throw new Error('posts.json HTTP ' + res.status);
+                        return res.json();
+                    })
+                    .catch(function() {
+                        // posts.json 不存在，尝试 Netlify Function（仅部署环境可用）
+                        return fetch('/.netlify/functions/list-posts')
+                            .then(function(res) {
+                                if (!res.ok) throw new Error('Function HTTP ' + res.status);
+                                return res.json();
+                            });
+                    })
+                    .then(function(posts) {
+                        if (!Array.isArray(posts)) posts = [];
+                        allPosts = posts;
+                        renderPosts(allPosts);
+                        setPostCount(allPosts.length);
+                        applyUrlQuery();
+                    })
+                    .catch(function() {
+                        // 所有方式都失败（如本地未运行构建脚本），回退到模拟数据
+                        console.warn('未找到 posts.json，使用模拟数据。请运行: node scripts/generate-posts.js');
+                        allPosts = MOCK_POSTS.slice();
+                        renderPosts(allPosts);
+                        setPostCount(allPosts.length);
+                        applyUrlQuery();
+                    });
+            }
+
+            /* ========== 排序（固定：文件名降序，编号大的在前） ========== */
+            function sortPosts(posts) {
+                return posts.slice().sort(function(a, b) {
+                    return b.file.localeCompare(a.file);
+                });
+            }
+
+            /* ========== 渲染文章列表（含分页） ========== */
+            function renderPosts(posts) {
+                var sorted = sortPosts(posts);
+
+                if (!sorted || sorted.length === 0) {
+                    container.innerHTML =
+                        '<div class="empty-state"><div class="empty-icon">.</div><div>' +
+                        (currentFilter ? '没有匹配的文章' : '还没有文章') + '</div></div>';
+                    paginationEl.innerHTML = '';
+                    return;
+                }
+
+                // 计算分页
+                var totalPages = Math.ceil(sorted.length / POSTS_PER_PAGE);
+                if (currentPage > totalPages) currentPage = totalPages;
+                if (currentPage < 1) currentPage = 1;
+
+                var start = (currentPage - 1) * POSTS_PER_PAGE;
+                var end = start + POSTS_PER_PAGE;
+                var pagePosts = sorted.slice(start, end);
+
+                renderList(pagePosts);
+                renderPagination(totalPages);
+            }
+
+            function renderList(posts) {
+                var html = '';
+                posts.forEach(function(post, idx) {
+                    var title = post.title || post.file.replace('.html', '').replace(/-/g, ' ');
+                    var date = post.date || '';
+                    var excerpt = post.excerpt || '';
+                    var url = post.url || ('/blog/' + post.file);
+
+                    html += '<a class="post-item" href="' + url + '" style="animation-delay:' + (idx * 40) + 'ms">';
+                    html += '<div class="post-title">' + escapeHtml(title) + '</div>';
+                    html += '<div class="post-meta">';
+                    if (date) {
+                        html += '<span>' + escapeHtml(date) + '</span>';
+                        html += '<span class="sep">/</span>';
+                    }
+                    html += '<span>' + escapeHtml(post.file) + '</span>';
+                    html += '</div>';
+                    if (excerpt) {
+                        html += '<div class="post-excerpt">' + escapeHtml(excerpt) + '</div>';
+                    }
+                    if (post.tags && post.tags.length) {
+                        html += '<div class="post-tags">';
+                        post.tags.forEach(function(tag, ti) {
+                            html += '<span class="tag-chip" style="animation-delay:' +
+                                (idx * 40 + 200 + ti * 60) + 'ms"># ' + escapeHtml(tag) + '</span>';
+                        });
+                        html += '</div>';
+                    }
+                    html += '</a>';
+                });
+                container.innerHTML = html;
+            }
+
+            /* ========== 分页控件 ========== */
+            function renderPagination(totalPages) {
+                if (totalPages <= 1) {
+                    paginationEl.innerHTML = '';
+                    return;
+                }
+
+                var html = '';
+
+                // 上一页
+                html += '<button class="pagination-btn" data-page="' + (currentPage - 1) + '"' +
+                    (currentPage === 1 ? ' disabled' : '') + '>&lt;</button>';
+
+                // 页码：智能省略
+                var pages = getPageNumbers(currentPage, totalPages);
+                pages.forEach(function(p) {
+                    if (p === '...') {
+                        html += '<span class="pagination-dots">···</span>';
+                    } else {
+                        html += '<button class="pagination-btn' +
+                            (p === currentPage ? ' active' : '') +
+                            '" data-page="' + p + '">' + p + '</button>';
+                    }
+                });
+
+                // 下一页
+                html += '<button class="pagination-btn" data-page="' + (currentPage + 1) + '"' +
+                    (currentPage === totalPages ? ' disabled' : '') + '>&gt;</button>';
+
+                paginationEl.innerHTML = html;
+            }
+
+            function getPageNumbers(current, total) {
+                var pages = [];
+                if (total <= 7) {
+                    for (var i = 1; i <= total; i++) pages.push(i);
+                    return pages;
+                }
+                pages.push(1);
+                if (current > 3) pages.push('...');
+                var s = Math.max(2, current - 1);
+                var e = Math.min(total - 1, current + 1);
+                for (var j = s; j <= e; j++) pages.push(j);
+                if (current < total - 2) pages.push('...');
+                pages.push(total);
+                return pages;
+            }
+
+            paginationEl.addEventListener('click', function(e) {
+                var btn = e.target.closest('.pagination-btn');
+                if (!btn || btn.disabled) return;
+                currentPage = parseInt(btn.dataset.page, 10);
+                renderPosts(currentFilter ? getFilteredPosts() : allPosts);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            function escapeHtml(str) {
+                if (!str) return '';
+                return String(str)
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;')
+                    .replace(/"/g, '&quot;');
+            }
+
+            /* ========== 搜索过滤（标题 / 文件名 / 标签 / 正文） ========== */
+            function getFilteredPosts() {
+                if (!currentFilter) return allPosts;
+                return allPosts.filter(function(post) {
+                    var title = (post.title || '').toLowerCase();
+                    var file = (post.file || '').toLowerCase();
+                    var tags = (post.tags || []).join(' ').toLowerCase();
+                    var content = (post.content || '').toLowerCase();
+                    return title.includes(currentFilter) ||
+                           file.includes(currentFilter) ||
+                           tags.includes(currentFilter) ||
+                           content.includes(currentFilter);
+                });
+            }
+
+            function filterPosts(keyword) {
+                currentFilter = keyword.trim().toLowerCase();
+                currentPage = 1;
+                if (!currentFilter) {
+                    renderPosts(allPosts);
+                    filterInfo.textContent = '';
+                    return;
+                }
+                var filtered = getFilteredPosts();
+                renderPosts(filtered);
+                filterInfo.textContent = '找到 ' + filtered.length + ' 篇';
+            }
+
+            searchInput.addEventListener('input', function() {
+                filterPosts(this.value);
+            });
+
+            /* ========== 滚动入场观察（页脚等） ========== */
+            function initReveal() {
+                var els = document.querySelectorAll('.reveal');
+                if (!els.length) return;
+                if (!window.IntersectionObserver) {
+                    Array.prototype.forEach.call(els, function(el) { el.classList.add('in'); });
+                    return;
+                }
+                var io = new IntersectionObserver(function(entries) {
+                    entries.forEach(function(en) {
+                        if (en.isIntersecting) {
+                            en.target.classList.add('in');
+                            io.unobserve(en.target);
+                        }
+                    });
+                }, { rootMargin: '0px 0px -50px 0px', threshold: 0.05 });
+                Array.prototype.forEach.call(els, function(el) { io.observe(el); });
+            }
+            initReveal();
+
+            /* ========== 页面过渡：方向类型标记 + 到达处理 + 旧浏览器兜底 ========== */
+            (function() {
+                var REDUCED = false;
+                try { REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+
+                function isHomeUrl(u) {
+                    try {
+                        var p = new URL(u, location.href).pathname;
+                        return p === '/' || p === '/index.html';
+                    } catch (e) { return false; }
+                }
+                function typeFor(u) { return isHomeUrl(u) ? 'back' : 'fwd'; }
+
+                function markPreIn() {
+                    var vh = window.innerHeight || 800;
+                    var els = document.querySelectorAll('.rv, .reveal');
+                    for (var i = 0; i < els.length; i++) {
+                        if (els[i].getBoundingClientRect().top < vh * 0.98) els[i].classList.add('pre-in');
+                    }
+                }
+
+                var hasVT = ('onpagereveal' in window) || ('onpageswap' in window);
+
+                if (hasVT) {
+                    window.addEventListener('pageswap', function(e) {
+                        if (!e.viewTransition) return;
+                        var to = '';
+                        try { to = (e.activation && e.activation.entry) ? e.activation.entry.url : ''; } catch (err) {}
+                        try { e.viewTransition.types.add(typeFor(to || location.href)); } catch (err) {}
+                    });
+                    window.addEventListener('pagereveal', function(e) {
+                        if (!e.viewTransition) return;
+                        document.documentElement.classList.add('vt');
+                        try { e.viewTransition.types.add(typeFor(location.href)); } catch (err) {}
+                        markPreIn();
+                    });
+                    return;
+                }
+
+                /* ===== 兜底：不支持跨文档 View Transitions ===== */
+                if (REDUCED) return;
+
+                var nav = null;
+                try { nav = sessionStorage.getItem('hzk-nav'); sessionStorage.removeItem('hzk-nav'); } catch (e) {}
+                if (nav === 'fwd' || nav === 'back') {
+                    document.documentElement.classList.add('vt');
+                    document.documentElement.classList.add('nav-' + nav);
+                    markPreIn();
+                }
+
+                var DUR = 300;
+                document.addEventListener('click', function(e) {
+                    if (e.defaultPrevented) return;
+                    if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+                    var a = e.target && e.target.closest ? e.target.closest('a') : null;
+                    if (!a) return;
+                    var href = a.getAttribute('href') || '';
+                    if (!href || href.charAt(0) === '#' || a.hasAttribute('download')) return;
+                    if (a.target && a.target !== '_self') return;
+                    var url;
+                    try { url = new URL(a.href, location.href); } catch (err) { return; }
+                    if (url.origin !== location.origin) return;
+                    if (url.pathname === location.pathname && url.search === location.search) return;
+
+                    e.preventDefault();
+                    var t = typeFor(a.href);
+                    try { sessionStorage.setItem('hzk-nav', t); } catch (err) {}
+
+                    var body = document.body;
+                    body.style.transition = 'transform ' + DUR + 'ms cubic-bezier(0.4, 0, 0.2, 1), opacity ' + DUR + 'ms ease';
+                    body.style.transform = 'translateX(' + (t === 'back' ? '100vw' : '-100vw') + ')';
+                    body.style.opacity = '0.35';
+
+                    var done = false, timer = null;
+                    function go() {
+                        if (done) return;
+                        done = true;
+                        clearTimeout(timer);
+                        location.href = a.href;
+                    }
+                    body.addEventListener('transitionend', go, { once: true });
+                    timer = setTimeout(go, DUR + 90);
+                }, true);
+            })();
+
+            /* ========== 初始化 ========== */
+            themeToggle.addEventListener('click', toggleTheme);
+
+            var hasConsent = checkConsent();
+
+            if (hasConsent) {
+                if (cookieConsent === 'all') {
+                    var savedTheme = 'light';
+                    try { savedTheme = localStorage.getItem(THEME_KEY) || 'light'; } catch (e) {}
+                    document.documentElement.setAttribute('data-theme', savedTheme);
+                    setThemeIcon(savedTheme);
+                } else {
+                    // essential 或 decline：默认浅色
+                    document.documentElement.setAttribute('data-theme', 'light');
+                    setThemeIcon('light');
+                }
+            } else {
+                // 首次访问：默认浅色
+                document.documentElement.setAttribute('data-theme', 'light');
+                setThemeIcon('light');
+            }
+
+            // 无论是否同意 Cookie，都加载文章列表
+            loadPosts();
+
+        })();
+    </script>
+</body>
+</html>
